@@ -1,20 +1,31 @@
-import React from 'react'; 
+'use client'
+import React, { use } from 'react'; 
 import Link from 'next/link';
+import path from 'path';
+import { usePathname } from 'next/navigation';
 
 const links = [
   { name: 'Home', path: '/' },
   { name: 'about', path: '/about' },
   { name: 'services', path: '/services' },
-  { name: 'works', path: '/works' },
+  { name: 'work', path: '/work' },
   { name: 'contact', path: '/contact' },
 ];
 
 const NavLinks = ({containerStyles}) => {
+     const pathname = usePathname();
   return(
     <ul className={containerStyles}>{links.map((link, index)=> {
+        // determine if the current link matches the active route
+        const isActive = pathname === link.path;
+        // calculate the number of characters in the link name
+        const charLength = link.name.length;
+        // set the line with based on character length
+        const lineWidth = charLength > 5 ? "after:w-[120%]": "after:w-[90%]";
+        console.log(charLength);
         return (
-            <Link href={link.path} key={index}>
-                {link.name}
+            <Link href={link.path} key={index} className={`relative text-lg uppercase text-white ${isActive && `after:content-[''] after:block after:absolute after:left-0 after:top-1/2 ${lineWidth} after:h-[4px] after:bg-accent after:-translate-y-1/2 after:z-0 `}`}>
+                <span className='relative z-10'>{link.name}</span>
             </Link>
     )})}
     </ul>)

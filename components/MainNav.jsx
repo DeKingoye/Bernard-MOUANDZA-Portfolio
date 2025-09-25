@@ -1,9 +1,12 @@
 import React from 'react'; 
 import NavLinks from './NavLinks';
+import { nav } from 'framer-motion/client';
 
 const MainNav = () => {
   return (
-    <NavLinks containerStyles="flex flex-col gap-6"/>
+    <nav>
+        <NavLinks containerStyles="flex flex-col gap-6"/>     
+    </nav>
   )
 }
 

@@ -2,10 +2,14 @@
 // import MainNav from '@/components/MainNav'
 import {motion} from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
+import { MdArrowOutward } from 'react-icons/md';
+import { HiOutlinePhone, HiOutlineMail } from 'react-icons/hi';
 // components
 import Blob from '@/components/Blob';
 import Image from "next/image";
-import avatarImg from '@/public/assets/avatar.png'
+import avatarImg from '@/public/assets/C6978D64-5498-4223-A30A-88CA79A2CFBF.png'; 
+import Socials from '@/components/Socials';
+import Pattern from '@/components/Pattern';
 
 const Home = () => {
   return (
@@ -15,13 +19,40 @@ const Home = () => {
      }}
      className='h-screen flex items-center'
     >
+      {/* pattern */}
+      <Pattern />
       <div className='flex flex-col xl:flex-row items-center justify-between w-full px-5'>
         {/* text */}
-        <div className='w-full xl:w-[550px]'>
+        <div className='w-full xl:w-[550px] flex flex-col items-center xl:items-start text-center xl:text-left '>
           <h1 className='h1 flex-1 mb-[28px]'>Bonjour, je suis Bernard<br/>
-          <TypeAnimation sequence={['Développeur Frontend', 2000, 'Développeur Fullstack', 2000]} wrapper='span' speed={40} className='text-accent' repeat={Infinity} cursor={false}/>
+          <TypeAnimation sequence={['Expert en transformation Digitale', 2000, 'Développeur Fullstack', 2000]} wrapper='span' speed={40} className='text-accent' repeat={Infinity} cursor={false}/>
           </h1>
-          <p> je m'occupe de toute la chaine informatique depuis la création jusq'au déploiement, en passant par les tests</p>
+          <p className='max-w-[500px] mb-[44px]'> je m'occupe de toute la chaine informatique depuis la création jusq'au déploiement, en passant par les tests</p>
+          <button className='btn btn-lg btn-accent mb-16'>
+            <div className='flex items-center gap-3'>
+              <span>parlons un peu</span>
+              <MdArrowOutward className="text-xl"/>
+            </div>
+          </button>
+          {/* contact info */}
+          <div className='flex flex-col xl:flex-row xl:items-center gap-4 xl:gap-8 mb-12 xl:mb-0'>
+            {/* phone */}
+            <div className='flex items-center gap-4 text-lg'>
+              <span className='text-accent'>
+                <HiOutlinePhone className='text-xl'/>
+              </span>
+              <span>+33763443742</span>
+            </div>
+            {/* email */}
+            <div className='flex items-center gap-4 text-lg'>
+              <span className='text-accent'>
+                <HiOutlineMail className='text-xl'/>
+              </span>
+              <span>yannmouandza3@gmail.com</span>
+            </div>
+          </div>
+          {/* Socials */}
+          <Socials containerStyles="flex 2xl:flex-col gap-6 xl:hidden 2xl:flex 2xl:absolute 2xl:top-1/2 2xl:right-2 2xl:transform 2xl:-translate-x-1/2 2xl:-translate-y-1/2" iconStyles="bg-accent text-white hover:bg-accent-hover transition w-[48px] h-[48px] text-[22px] flex items-center justify-center rounded-full cursor-pointer" />
         </div>
         {/* blob & image */}
         <div className='hidden xl:block flex-1 relative z-20'>

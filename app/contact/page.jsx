@@ -135,7 +135,6 @@ const Contact = () => {
               </div>
             </div>
           </div>
-        contact
     </motion.section>
   )
 }

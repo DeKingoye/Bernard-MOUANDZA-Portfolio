@@ -5,11 +5,16 @@ import path from 'path';
 import { usePathname } from 'next/navigation';
 
 const links = [
-  { name: 'Home', path: '/' },
-  { name: 'about', path: '/about' },
+  // { name: 'Home', path: '/' },
+  // { name: 'about', path: '/about' },
+  // { name: 'services', path: '/services' },
+  // { name: 'work', path: '/work' },
+  // { name: 'contact', path: '/contact' },
+  { name: 'Accueil', path: '/' },
+  { name: 'A propos', path: '/about' },
   { name: 'services', path: '/services' },
-  { name: 'work', path: '/work' },
-  { name: 'contact', path: '/contact' },
+  { name: 'Projets', path: '/work' },
+  { name: 'Contact', path: '/contact' },
 ];
 
 const NavLinks = ({containerStyles}) => {

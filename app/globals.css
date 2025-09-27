@@ -86,6 +86,77 @@ body {
  /* swiper bullets */
 
  .swiper-horizontal > .swiper-pagination-bullets .swiper-pagination-bullets, 
- .swiper-pagination-horizontal.swiper-pagination-bullets .swiper-paginantion-bullet {
+ .swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet {
   @apply bg-accent; 
  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Ce qui marche */
+
+
+/* ==== Flèches Swiper (desktop + mobile) ==== */
+.swiper-button-next,
+.swiper-button-prev {
+  @apply w-10 h-10 rounded-full bg-accent text-white shadow-lg flex items-center justify-center;
+  z-index: 10;
+  transition: transform .2s;
+}
+.swiper-button-next::after,
+.swiper-button-prev::after { font-size: 18px; }
+.swiper-button-disabled { @apply opacity-50 cursor-not-allowed; }
+
+/* Animation directionnelle (clignote + petit “nudge”) */
+@keyframes blink-right {
+  0%,100%{opacity:.85; transform:translateX(0); box-shadow:0 0 0 0 rgba(168,131,255,.30)}
+  50%    {opacity:1;   transform:translateX(4px); box-shadow:0 0 0 10px rgba(168,131,255,0)}
+}
+@keyframes blink-left {
+  0%,100%{opacity:.85; transform:translateX(0); box-shadow:0 0 0 0 rgba(168,131,255,.30)}
+  50%    {opacity:1;   transform:translateX(-4px); box-shadow:0 0 0 10px rgba(168,131,255,0)}
+}
+.swiper-button-next:not(.swiper-button-disabled){ animation: blink-right 1.2s ease-in-out infinite; }
+.swiper-button-prev:not(.swiper-button-disabled){ animation: blink-left 1.2s ease-in-out infinite; }
+.swiper-button-next:hover,
+.swiper-button-prev:hover { animation-play-state: paused; transform: scale(1.06); }
+
+/* Accessibilité : réduire l’anim si demandé */
+@media (prefers-reduced-motion: reduce) {
+  .swiper-button-next:not(.swiper-button-disabled),
+  .swiper-button-prev:not(.swiper-button-disabled) { animation: none; }
+}
+
+/* ==== MOBILE : rendre les flèches visibles + plus cliquables ==== */
+/* IMPORTANT: ceci écrase toute règle précédente qui les cachait */
+@media (max-width: 640px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: flex !important;     /* force l’affichage */
+    @apply w-9 h-9;             /* zone de clic ~44px */
+    backdrop-filter: saturate(120%) blur(6px);
+  }
+
+  /* un peu plus petits chevrons en mobile */
+  .swiper-button-next::after,
+  .swiper-button-prev::after { font-size: 16px; }
+
+  /* marge côté écran */
+  .swiper-button-next { right: 6px; }
+  .swiper-button-prev { left: 6px; }
+
+  /* éviter de mordre sur les safe areas iOS */
+  @supports (padding: max(0px)) {
+    .swiper-button-next { right: max(8px, env(safe-area-inset-right)); }
+    .swiper-button-prev { left:  max(8px, env(safe-area-inset-left)); }
+  }
+}

@@ -12,7 +12,7 @@ const links = [
   // { name: 'contact', path: '/contact' },
   { name: 'Accueil', path: '/' },
   { name: 'A propos', path: '/about' },
-  { name: 'services', path: '/services' },
+  //{ name: 'services', path: '/services' },
   { name: 'Projets', path: '/work' },
   { name: 'Contact', path: '/contact' },
 ];

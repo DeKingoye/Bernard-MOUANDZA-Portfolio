@@ -25,14 +25,23 @@ const Header = () => {
                             <SheetDescription className='sr-only'>Navigation menu</SheetDescription>
                         </SheetHeader>
                         <NavLinks containerStyles="flex flex-col gap-8 max-w-[100px]"/>
-                        <div>
+                        {/* <div>
                             <button className='btn btn-lg btn-tertiary mb-16'>
                                 <div className='flex items-center gap-3'>
                                     <span>Télecharger mon CV</span>
                                     <MdFileDownload className="text-xl"/>
                                 </div>
                             </button>
-                        </div>
+                        </div> */}
+                        {/* Lien de téléchargement stylé comme un bouton */}
+                        <a
+                        href="/api/cv"
+                        className="btn btn-lg btn-tertiary mb-16 inline-flex items-center gap-3"
+                        aria-label="Télécharger mon CV (PDF)"
+                        >
+                        <span>Télécharger mon CV</span>
+                        <MdFileDownload className="text-xl" />
+                        </a>
                         <Socials containerStyles="flex gap-4" iconStyles="bg-accent text-white hover:bg-accent-hover transition w-[40px] h-[40px] text-[20px] flex items-center justify-center rounded-full cursor-pointer"/>
                     </SheetContent>
                 </Sheet>

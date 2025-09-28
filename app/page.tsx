@@ -17,7 +17,8 @@ const Home = () => {
      initial={{opacity:0}}
      animate={{opacity:1, transition:{delay:2.4, duration:0.4, ease: "easeIn"},
      }}
-     className='h-screen flex items-center'
+    //  className='h-screen flex items-center'
+    className='flex items-center md:min-h-screen py-0 xl:py-0'
     >
       {/* pattern */}
       <Pattern />
@@ -25,7 +26,7 @@ const Home = () => {
         {/* text */}
         <div className='w-full xl:w-[550px] flex flex-col items-center xl:items-start text-center xl:text-left '>
           <h1 className='h1 flex-1 mb-[28px]'>Bonjour, je suis Bernard<br/>
-          <TypeAnimation sequence={['Expert en transformation Digitale', 2000, 'Développeur Fullstack', 2000]} wrapper='span' speed={40} className='text-accent' repeat={Infinity} cursor={false}/>
+          <TypeAnimation sequence={['Expert en transformation Digitale', 2000, 'Passionné par la data', 2000]} wrapper='span' speed={40} className='text-accent' repeat={Infinity} cursor={false}/>
           </h1>
           <p className='max-w-[500px] mb-[44px]'> je m'occupe de toute la chaine informatique depuis la création jusq'au déploiement, en passant par les tests</p>
           <button className='btn btn-lg btn-accent mb-16'>

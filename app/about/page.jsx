@@ -25,7 +25,7 @@ const About = () => {
             <div className='flex flex-col xl:flex-row items-center gap-24 w-full h-[680px]'>
                 {/* img & social icons */}
               <div className='hidden xl:flex flex-col w-full h-full pt-14 max-w-[430px] relative'>
-                <Image src="/assets/C6978D64-5498-4223-A30A-88CA79A2CFBF.png" width={320} height={496} alt="" className='z-20 realative'/>  
+                <Image src="/assets/yannS.png" width={320} height={496} alt="" className='z-20 realative'/>  
                   {/* overlay  */}
                 <div className='w-full h-[60px] absolute left-0 top-[420px] right-0 bg-gradient-to-t from-primary via-primary/90 z-30'></div>
                   {/* blob */}

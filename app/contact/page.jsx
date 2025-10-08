@@ -15,7 +15,7 @@ const Contact = () => {
         initial={{opacity:0}}
          animate={{opacity:1, transition:{delay:2.4, duration:0.4, ease: "easeIn"},
          }}
-        className='h-screen flex items-center py-0 xl:py-0'
+        className='h-screen flex items-center py-15 xl:py-0'
         >
           <div className="container mx-auto w-full h-full flex flex-col items-center xl:justify-center xl:overflow-hidden scrollbar scrollbar-thumb-accent scrollbar-track-accent/5 overflow-y-scroll xl:overflow-y-visible">
             <div className='w-full'>
@@ -24,9 +24,10 @@ const Contact = () => {
                 <div className='flex-1 xl:w-[600px] flex flex-col gap-12'>
                   {/* text */}
                   <div>
-                    <h2>Get In <span className='text-accent'>Touch</span></h2>
+                    <h2>Entrer en <span className='text-accent'>contact</span></h2>
+                    
                     <p className='max-w-[460px]'>
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit. At odio vel impedit quo error adipisci! Neque, alias necessitatibus voluptatibus ut praesentium exercitationem, minus harum repellendus incidunt possimus ratione veniam eligendi.&
+                    Expert en transformation digitale, je suis passionné par la data et l’automatisation des processus. J’accompagne les organisations dans la modernisation de leurs outils et la valorisation de leurs données grâce à la Power Platform (Power BI, Power Apps, Power Automate, AiBuilder, Sharepoint). Mon objectif : transformer les données en leviers de décision et les tâches répétitives en flux intelligents, pour rendre les entreprises plus efficaces, agiles et orientées résultats.
                     </p>
                   </div>
                   {/* info */}
@@ -57,7 +58,7 @@ const Contact = () => {
                   </div>
                 </div>
                   {/* form */}
-                <div className='flex-1'>
+                <div className='flex-1 hidden'>
                   <form className="flex flex-col gap-6 items-start">
                     {/* first and lastname */}
                     <div className='flex flex-col xl:flex-row gap-6 w-full'>

@@ -468,24 +468,25 @@ import {FaGithub} from "react-icons/fa";
 const projects = [
   {
     id: 1,
-    category: "frontend",
-    title: "LaunchWave Landing Page",
-    description: "React + Tailwind Landing page",
-    image: "/assets/work/thumb1.png",
+    category: "data",
+    title: "Projet visant à classer les employés selon leurs performances de vente",
+    description: "Réalisation d’un projet complet intégrant Power BI, Power Apps, Power Automate et Dataverse.",
+    image: "/assets/work/DataverseYann_page.jpg",
     link: "",
     github: "",
-    tech: ["React", "Tailwind CSS", "Framer Motion"]
+    tech: ["Power BI", "Power Apps", "Power Automate", "Dataverse"]
   },
 
   {
     id: 2,
-    category: "frontend",
-    title: "Nextfolio Portfolio Site",
-    description: "Next.js portfolio site",
-    image: "/assets/work/thumb2.png",
+    category: "data",
+    category: "data",
+    title: "Projet illustrant le suivi des ventes à l’aide de KPI.",
+    description: "Projet suivi de vente avec PowerBi et PowerBi Ser",
+    image: "/assets/work/Suivi_de_ventes_page.jpg",
     link: "",
     github: "",
-    tech: ["Next.js", "Tailwind CSS", "Shadcn UI"]
+    tech: ["Sharepoint","PowerBi", "Power Bi Services", "Power Apps"]
   },
   {
     id: 3,
@@ -564,7 +565,7 @@ const projects = [
 
 ]
 
-const categories = ['frontend', 'fullstack', 'uiux', 'branding'];
+const categories = ['data', 'fullstack', 'uiux', 'branding'];
 
 const Work = () => {
   return (
@@ -580,7 +581,7 @@ const Work = () => {
         <h2 className='h2 mb-6 xl:mb-12 max-w-[600px]'>Mes derniers <span>projets</span>
         </h2>
         {/* tabs */}
-        <Tabs defaultValue='frontend' className="w-full flex flex-col gap-6 xl:gap-12">
+        <Tabs defaultValue='data' className="w-full flex flex-col gap-6 xl:gap-12">
           <TabsList className='flex flex-wrap justify-center items-center gap-4 h-full mb-4 xl:mb-0'>
             {categories.map ((category)=>{
               return (
@@ -608,12 +609,12 @@ const Work = () => {
                         <SwiperSlide key={project.id} className="h-full">
                           <div className="flex flex-col xl:flex-row gap-8 xl:gap-12">
                             {/* project info */}
-                            <div className='w-full max-w-[380px] flex flex-col gap-6 xl:gap-8 xl:pt-6 order-2 xl:order-none'>
+                            <div className='w-full max-w-[380px] flex flex-col gap-6 xl:gap-8 xl:pt-1 order-2 xl:order-none'>
                               {/* title */}
                               <h3 className="h3">{project.title}</h3>
                               {/* tech */}
                               <div className='xl:mb-4 max-w-[300px] min-h-[130px]'>
-                                <p className='mb-4'>Technologies Used</p>
+                                <p className='mb-4'>Technologies Utilisées</p>
                                 <ul className="flex flex-wrap gap-4">
                                   {project.tech.map((item, index) => {
                                     return <li

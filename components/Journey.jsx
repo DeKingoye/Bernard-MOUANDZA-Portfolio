@@ -2,18 +2,18 @@ import React from 'react'
 
 const journey = [
     {
-        years: "2022 - Present",
-        role: "Integrateur web",
+        years: "2022 - 2024",
+        role: "Expert en transformation digitale",
         institution: "Afluens Group",
     },
     {
         years: "2016 - 2018",
-        role: "Integrateur web",
+        role: "Developpeur Powerplatform",
         institution: "ABC Agence Imobiliere",
     },
     {
-        years: "2020 - 2022",
-        role: "Etudiant",
+        years: "2024",
+        role: "Master",
         institution: "Haute Ecole de technologie de l'information  et de la communication",
     },
 ]
@@ -31,7 +31,7 @@ const Journey = () => {
                     {/* bullets */}
                     <div className='flex flex-col w-max justify-center items-center'>
                         <div className='w-3 h-3 bg-accent rounded-full'></div>
-                        <div className='w-[1px] h-[180px] bg-white/10'>2</div>
+                        <div className='w-[1px] h-[180px] bg-white/10'>.</div>
                     </div>
                     {/* text */}
                     <div className='max-w-[500px]'>

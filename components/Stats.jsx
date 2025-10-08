@@ -6,7 +6,7 @@ const Stats = () => {
         <div className="flex gap-4">
             <div className="text-5xl font-bold text-accent flex">
                 <CountUp end={5} duration={5} delay={2} className="block w-[60px]"/>
-                <div>+</div>
+                {/* <div>+</div> */}
             </div>
             <span>
                 Ans <br/> d'Experience
@@ -15,12 +15,12 @@ const Stats = () => {
 
         <div className="flex gap-4">
             <div className="text-5xl font-bold text-accent flex">
-                <CountUp end={3} duration={5} delay={0} className="block w-[60px]"/>
-                <div>+</div>
+                {/* <CountUp end={3} duration={5} delay={0} className="block w-[60px]"/> */}
+                {/* <div>+</div> */}
             </div>
-            <span>
+            {/* <span>
                 Clients <br/> dans le monde
-            </span>
+            </span> */}
         </div>
     </div>
   )

@@ -108,7 +108,7 @@ const Skills = () => {
   return (
     <div>
       <h2 className="h2 mb-8">
-        My <span className="text-accent">Skills</span>
+        Mes <span className="text-accent">Competences</span>
       </h2>
 
       <TooltipProvider>

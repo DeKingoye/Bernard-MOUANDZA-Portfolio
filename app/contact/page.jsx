@@ -24,7 +24,7 @@ const Contact = () => {
                 <div className='flex-1 xl:w-[600px] flex flex-col gap-12'>
                   {/* text */}
                   <div>
-                    <h2>Entrer en <span className='text-accent'>contact</span></h2>
+                    <h2 >Entrer en <span className='text-accent text-lg'>contact avec moi</span></h2><br /> 
                     
                     <p className='max-w-[460px]'>
                     Expert en transformation digitale, je suis passionné par la data et l’automatisation des processus. J’accompagne les organisations dans la modernisation de leurs outils et la valorisation de leurs données grâce à la Power Platform (Power BI, Power Apps, Power Automate, AiBuilder, Sharepoint). Mon objectif : transformer les données en leviers de décision et les tâches répétitives en flux intelligents, pour rendre les entreprises plus efficaces, agiles et orientées résultats.

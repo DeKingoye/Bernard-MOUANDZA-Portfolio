@@ -48,16 +48,16 @@ import 'swiper/css/pagination';
 import { ImQuotesLeft } from 'react-icons/im';
 
 const testimonial = [
-  {
-    message: "Lorem ipsum dolor sit amet consectetur adipisicing consectetur elit.",
+   {
+    message: "Le déploiement de ce portfolio a été fait sur GCP, en utilisant github actions pour le CI/CD, artifact registry pour le stockage de mes images, instance de VM qui tourne sur compute engine",
     name: "Yann Mouandza",
   },
   {
-    message: "Lorem ipsum dolor sit amet consectetur adipisicing consectetur elit.",
+    message: "Un loadbalancer, un certificat ssl managed par Google, l'utilisation d'un MIG, un système de rolling update à chaque nouveau déploiement, mon nom de domaine je l'ai acheté chez OVH",
     name: "Yann Mouandza",
   },
   {
-    message: "Lorem ipsum dolor sit amet consectetur adipisicing consectetur elit.",
+    message: "Ce portfolio a été fait avec Nextjs, Tailwind css",
     name: "Yann Mouandza",
   },
 ];
@@ -67,7 +67,7 @@ const Testimonial = () => {
     <Swiper
       modules={[Autoplay]}
       loop={false}
-      autoplay={{ delay: 4000, disableOnInteraction: false }}
+      autoplay={{ delay: 6000, disableOnInteraction: false }}
       className="w-full max-w-[310px] md:max-w-[520px] bg-secondary rounded-lg"
     >
       {testimonial.map((person, index) => {

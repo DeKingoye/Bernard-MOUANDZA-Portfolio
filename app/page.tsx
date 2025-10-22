@@ -130,8 +130,7 @@ const Home = () => {
           </h1>
 
           <p className="max-w-[500px] mb-[44px]">
-            Je m&apos;occupe de toute la chaîne informatique depuis la
-            création jusqu&apos;au déploiement, en passant par les tests.
+            Entierement impliqué dans la transformation digitale des organisations, après des années passées chez afluens Group et chez ABC Agence Immobilière, j'ai gagné en maturité sur plusieurs sujets d'où le fait de vous proposer mes services
           </p>
 
           {/* CTA -> /about */}

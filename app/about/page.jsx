@@ -45,7 +45,7 @@ const About = () => {
                   <h2 className='h2 mb-6'>
                     <span className='text-accent'>Bernard</span> MOUANDZA
                   </h2>
-                  <p className='max-w-[540px] mb-12'>Je suis entierement impliqué dans la transformation digitale des organisations, après des années passées chez afluens Group, j'ai gagné en maturité sur plusieurs sujets</p>
+                  <p className='max-w-[540px] mb-12'>Je suis entierement impliqué dans la transformation digitale des organisations, après des années passées chez afluens Group et ABC Agence Immobilière, j'ai gagné en maturité sur plusieurs sujets.</p>
                   <div className='flex flex-col items-start gap-16'>
                     <Stats/>
                     <Testimonial/>

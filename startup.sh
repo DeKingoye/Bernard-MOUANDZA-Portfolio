@@ -1,53 +1,60 @@
 #!/bin/bash
+set -e
 
 LOG_FILE="/var/log/portfolio-startup.log"
-IMAGE="europe-west3-docker.pkg.dev/portfolio-projet-yann/portfolio-repo/portfolio-mouandza:latest"
+
+# 🔒 IMAGE VERSIONNÉE (CRITIQUE)
+IMAGE="europe-west1-docker.pkg.dev/portfolio-projet-yann-475905/portfolio-repo/portfolio-mouandza:v2"
 CONTAINER_NAME="portfolio"
 
-echo "===== STARTUP SCRIPT V8 — BEGIN =====" | tee -a "$LOG_FILE"
-date | tee -a "$LOG_FILE"
+exec > >(tee -a "$LOG_FILE") 2>&1
+
+echo "=================================================="
+echo "🚀 STARTUP SCRIPT V9 — PORTFOLIO (STABLE PROD)"
+date
+echo "=================================================="
 
 #############################################
-### Retry Function (Indestructible)
+# Retry function (bulletproof)
 #############################################
 retry() {
-  local n=0
-  local try=$1
-  local cmd="${@:2}"
+  local attempts=$1
+  shift
+  local cmd="$@"
+  local count=0
 
-  until [ $n -ge $try ]; do
-    echo "[Retry $((n+1))/$try] Executing: $cmd" | tee -a "$LOG_FILE"
-    $cmd && return 0
-    n=$((n+1))
-    echo "❌ Failed. Retrying in 5s..." | tee -a "$LOG_FILE"
+  until [ $count -ge $attempts ]; do
+    echo "🔁 Attempt $((count+1))/$attempts → $cmd"
+    if eval "$cmd"; then
+      return 0
+    fi
+    count=$((count+1))
+    echo "❌ Failed — retry in 5s"
     sleep 5
   done
 
-  echo "🔥 ERROR: Command failed after $try attempts → $cmd" | tee -a "$LOG_FILE"
-  return 1
+  echo "🔥 FATAL: command failed after $attempts attempts → $cmd"
+  exit 1
 }
 
 #############################################
-### 1. System Update (Safe)
+# 1️⃣ System preparation
 #############################################
-echo "🔧 Updating system..." | tee -a "$LOG_FILE"
+echo "🔧 Updating system packages"
 retry 5 apt-get update -y
 retry 5 apt-get upgrade -y
 
 #############################################
-### 2. Install Docker (Debian 12 FIX)
+# 2️⃣ Docker installation (Debian 12 safe)
 #############################################
-echo "🐳 Checking Docker installation..." | tee -a "$LOG_FILE"
-
 if ! command -v docker >/dev/null 2>&1; then
-  echo "➡️ Docker not found. Installing..." | tee -a "$LOG_FILE"
+  echo "🐳 Installing Docker"
 
-  retry 5 install -m 0755 -d /etc/apt/keyrings
   retry 5 apt-get install -y ca-certificates curl gnupg
 
-  retry 5 curl -fsSL https://download.docker.com/linux/debian/gpg \
+  install -m 0755 -d /etc/apt/keyrings
+  curl -fsSL https://download.docker.com/linux/debian/gpg \
     -o /etc/apt/keyrings/docker.asc
-
   chmod a+r /etc/apt/keyrings/docker.asc
 
   echo \
@@ -58,50 +65,57 @@ if ! command -v docker >/dev/null 2>&1; then
 
   retry 5 apt-get update -y
   retry 5 apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
 else
-  echo "✅ Docker already installed." | tee -a "$LOG_FILE"
+  echo "✅ Docker already installed"
 fi
 
-echo "🚀 Ensuring Docker service is running..." | tee -a "$LOG_FILE"
+#############################################
+# 3️⃣ Docker service
+#############################################
+echo "🚀 Starting Docker"
 retry 5 systemctl enable docker
 retry 5 systemctl restart docker
-retry 5 systemctl status docker
 
 #############################################
-### 3. Authenticate to Artifact Registry
+# 4️⃣ Artifact Registry authentication
 #############################################
-echo "🔐 Configuring Docker auth for Artifact Registry..." | tee -a "$LOG_FILE"
-retry 5 gcloud auth configure-docker europe-west3-docker.pkg.dev -q
+echo "🔐 Authenticating Docker to Artifact Registry"
+retry 5 gcloud auth configure-docker europe-west1-docker.pkg.dev -q
 
 #############################################
-### 4. Pull the Docker image
+# 5️⃣ Pull image (version figée)
 #############################################
-echo "📦 Pulling image: $IMAGE" | tee -a "$LOG_FILE"
-retry 10 docker pull $IMAGE
+echo "📦 Pulling image: $IMAGE"
+retry 10 docker pull "$IMAGE"
 
 #############################################
-### 5. Stop previous container safely
+# 6️⃣ Stop previous container
 #############################################
-echo "🧹 Stopping old container if exists..." | tee -a "$LOG_FILE"
-docker stop $CONTAINER_NAME 2>/dev/null || true
-docker rm $CONTAINER_NAME 2>/dev/null || true
+echo "🧹 Cleaning previous container"
+docker stop "$CONTAINER_NAME" || true
+docker rm "$CONTAINER_NAME" || true
 
 #############################################
-### 6. Run container (auto-restart)
+# 7️⃣ Run container (WATCHDOG ENABLED)
 #############################################
-echo "🚀 Launching new container..." | tee -a "$LOG_FILE"
+echo "🚀 Running container (memory + cpu limits)"
+
 retry 5 docker run -d \
-  --name $CONTAINER_NAME \
-  -p 80:80 \
+  --name "$CONTAINER_NAME" \
   --restart always \
-  $IMAGE
+  --memory=512m \
+  --cpus=1 \
+  -p 80:80 \
+  -e PORT=80 \
+  "$IMAGE"
 
 #############################################
-### 7. Final Checks
+# 8️⃣ Final checks
 #############################################
-echo "🔎 Checking running containers..." | tee -a "$LOG_FILE"
-docker ps | tee -a "$LOG_FILE"
+echo "🔎 Docker status"
+docker ps
 
-echo "===== STARTUP SCRIPT V8 — END =====" | tee -a "$LOG_FILE"
-date | tee -a "$LOG_FILE"
+echo "=================================================="
+echo "✅ STARTUP SCRIPT V9 COMPLETED SUCCESSFULLY"
+date
+echo "=================================================="

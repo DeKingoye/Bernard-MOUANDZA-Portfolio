@@ -1,10 +1,11 @@
 version: "3.9"
+
 services:
   portfolio:
-    image: europe-west3-docker.pkg.dev/portfolio-projet-yann/portfolio-repo/portfolio-mouandza:latest
+    image: europe-west1-docker.pkg.dev/portfolio-projet-yann-475905/portfolio-repo/portfolio-mouandza:latest
+    container_name: portfolio
     ports:
       - "3000:80"
     environment:
-      # Ajoute tes variables si besoin
       - PORT=80
     restart: unless-stopped

@@ -1,51 +1,47 @@
 #!/bin/bash
-set -e
 
 LOG_FILE="/var/log/portfolio-startup.log"
-
-# 🔒 IMAGE VERSIONNÉE (CRITIQUE)
-IMAGE="europe-west1-docker.pkg.dev/portfolio-projet-yann-475905/portfolio-repo/portfolio-mouandza:v2"
+IMAGE="europe-west1-docker.pkg.dev/portfolio-projet-yann-475905/portfolio-repo/portfolio-mouandza:v3"
 CONTAINER_NAME="portfolio"
 
 exec > >(tee -a "$LOG_FILE") 2>&1
 
 echo "=================================================="
-echo "🚀 STARTUP SCRIPT V9 — PORTFOLIO (STABLE PROD)"
+echo "🚀 STARTUP SCRIPT V9 — STABLE PRODUCTION"
 date
 echo "=================================================="
 
 #############################################
-# Retry function (bulletproof)
+# Retry helper (NO EXIT)
 #############################################
 retry() {
   local attempts=$1
   shift
   local cmd="$@"
-  local count=0
+  local i=1
 
-  until [ $count -ge $attempts ]; do
-    echo "🔁 Attempt $((count+1))/$attempts → $cmd"
+  while [ $i -le $attempts ]; do
+    echo "🔁 Attempt $i/$attempts → $cmd"
     if eval "$cmd"; then
       return 0
     fi
-    count=$((count+1))
-    echo "❌ Failed — retry in 5s"
+    echo "⚠️ Failed — retry in 5s"
     sleep 5
+    i=$((i+1))
   done
 
-  echo "🔥 FATAL: command failed after $attempts attempts → $cmd"
-  exit 1
+  echo "❌ Command failed after $attempts attempts → $cmd"
+  return 1
 }
 
 #############################################
-# 1️⃣ System preparation
+# 1️⃣ System prep (NO upgrade)
 #############################################
-echo "🔧 Updating system packages"
+echo "🔧 Updating package list"
 retry 5 apt-get update -y
-retry 5 apt-get upgrade -y
 
 #############################################
-# 2️⃣ Docker installation (Debian 12 safe)
+# 2️⃣ Docker install (safe)
 #############################################
 if ! command -v docker >/dev/null 2>&1; then
   echo "🐳 Installing Docker"
@@ -61,7 +57,7 @@ if ! command -v docker >/dev/null 2>&1; then
     "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
     https://download.docker.com/linux/debian \
     $(. /etc/os-release && echo "$VERSION_CODENAME") stable" \
-    | tee /etc/apt/sources.list.d/docker.list > /dev/null
+    > /etc/apt/sources.list.d/docker.list
 
   retry 5 apt-get update -y
   retry 5 apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
@@ -72,50 +68,48 @@ fi
 #############################################
 # 3️⃣ Docker service
 #############################################
-echo "🚀 Starting Docker"
-retry 5 systemctl enable docker
-retry 5 systemctl restart docker
+systemctl enable docker
+systemctl restart docker
 
 #############################################
-# 4️⃣ Artifact Registry authentication
+# 4️⃣ Artifact Registry auth
 #############################################
-echo "🔐 Authenticating Docker to Artifact Registry"
 retry 5 gcloud auth configure-docker europe-west1-docker.pkg.dev -q
 
 #############################################
-# 5️⃣ Pull image (version figée)
+# 5️⃣ Pull image
 #############################################
-echo "📦 Pulling image: $IMAGE"
 retry 10 docker pull "$IMAGE"
 
 #############################################
-# 6️⃣ Stop previous container
+# 6️⃣ Run container
 #############################################
-echo "🧹 Cleaning previous container"
 docker stop "$CONTAINER_NAME" || true
 docker rm "$CONTAINER_NAME" || true
 
-#############################################
-# 7️⃣ Run container (WATCHDOG ENABLED)
-#############################################
-echo "🚀 Running container (memory + cpu limits)"
-
-retry 5 docker run -d \
+docker run -d \
   --name "$CONTAINER_NAME" \
   --restart always \
-  --memory=512m \
-  --cpus=1 \
   -p 80:80 \
   -e PORT=80 \
   "$IMAGE"
 
 #############################################
-# 8️⃣ Final checks
+# 7️⃣ Readiness check (CRITICAL)
 #############################################
-echo "🔎 Docker status"
-docker ps
+echo "⏳ Waiting for app on port 80..."
+for i in {1..40}; do
+  if curl -sf http://localhost:80 >/dev/null; then
+    echo "✅ App is UP"
+    break
+  fi
+  echo "⌛ Not ready yet ($i/40)"
+  sleep 2
+done
 
-echo "=================================================="
-echo "✅ STARTUP SCRIPT V9 COMPLETED SUCCESSFULLY"
+#############################################
+# 8️⃣ Final state
+#############################################
+docker ps
+echo "✅ STARTUP SCRIPT COMPLETED"
 date
-echo "=================================================="
